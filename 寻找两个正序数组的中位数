@@ -1,0 +1,78 @@
+/*
+ * @lc app=leetcode.cn id=4 lang=java
+ *
+ * [4] 寻找两个正序数组的中位数
+ */
+
+// @lc code=start
+class Solution {
+    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int len1 = nums1.length;
+        int len2 = nums2.length;
+
+        if(len1 == 0){
+            if(len2 % 2 == 0){
+                return ((double)(nums2[(len2 / 2)-1] + nums2[len2 / 2])) / 2;
+            }
+            else{
+                return (double)(nums2[len2 / 2]);
+            }
+        }
+        if(len2 == 0)
+        {
+            if(len1 % 2 == 0){
+                return ((double)(nums1[(len1 / 2)-1] + nums1[len1 / 2])) / 2;
+            }
+            else{
+                return (double)(nums1[len1 / 2]);
+            }
+        }
+
+        int totallen = len1 + len2;
+        int [] nums = new int[totallen / 2 + 1 ];
+        int temp1 = 0;
+        int temp2 = 0;
+        int temps = 0;
+        while(temps < (totallen / 2 + 1)){
+            if(temp1 == -1){
+                nums[temps] = nums2[temp2];
+                temp2++;
+            }
+            else if(temp2 == -1){
+                nums[temps] = nums1[temp1];
+                temp1++;
+            }
+            else{
+                int n1 = nums1[temp1];
+                int n2 = nums2[temp2];
+                if(n1 > n2){
+                    nums[temps] = n2;
+                    temp2++;
+                }
+                else{
+                    nums[temps] = n1;
+                    temp1++;
+                }
+                if(temp1 >= len1)
+                {
+                    temp1 = -1;
+                }
+                if(temp2 >= len2)
+                {
+                    temp2 = -1;
+                }
+            }
+            temps++;
+        } 
+        
+        if(totallen % 2 == 0)
+        {
+            return ((double)(nums[temps - 1] + nums[temps -2]) / 2);
+        }
+        else
+        {
+            return (double)(nums[temps-1]);
+        }
+    }
+}
+// @lc code=end
