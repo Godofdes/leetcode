@@ -1,0 +1,55 @@
+class Solution {
+    public int divide(int a, int b) {
+        int flaga = 1;
+        int flagb = 1;
+        int numa = a;
+        int numb = b;
+        int count = 0;
+        //判断正负
+        if(a > 0){
+            flaga = -1;
+            numa = -a;
+        }
+        if(b > 0){
+            flagb = -1;
+            numb = -b;
+        }
+        if(a == 0){
+            return 0;
+        }
+
+        //-2147483648的情况
+        if(a == -2147483648){
+            if(b == -2147483648){
+                return 1;
+            }
+            else if(b == 1)
+            {
+                return -2147483648;
+            }
+            else if(b == -1){
+                return 2147483647;
+            }
+        }
+        
+        int ret = 0;
+        //连续相减
+        while(numa <= numb){
+            int cnt = 1;
+            int val = numb;
+            while(val >= 0xc0000000 && numa <= (val+val)){
+                cnt+=cnt;
+                val+=val;
+            }
+            ret+=cnt;
+            numa-=val;
+        }
+
+        if((flaga + flagb) == 0){
+            return 0 - ret;
+        }else{
+            return ret;
+        }
+
+    }
+}
