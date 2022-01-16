@@ -1,0 +1,67 @@
+class Solution {
+    public String addBinary(String a, String b) {
+       int num = (a.length()>b.length())?a.length():b.length();
+	        String[] str1 = new String[num];
+	        String[] str2 = new String[num];
+	        String[] str3 = new String[num+1];
+          
+          //按顺序放入数组，不足的用0补充
+	        for(int i = num-1,j=0; i >= 0; i--,j++){
+	            if(i>=(num-a.length())){
+	                str1[i] = a.charAt(a.length()-j-1) + "";
+	            }else{
+	                str1[i] = "0";
+	            }
+	        }
+
+	        for(int i = num-1,j=0; i >= 0; i--,j++){
+	            if(i>=(num-b.length())){
+	                str2[i] = b.charAt(b.length()-j-1) + "";
+	            }else{
+	                str2[i] = "0";
+	            }
+	        }
+          
+          //判断二进制每一位的相加结果，若进位则置flag为true
+	        boolean flag = false;
+	        int i = num - 1, k = num;
+	        while(i >= 0){
+	            int numa = Integer.parseInt(str1[i]);
+	            int numb = Integer.parseInt(str2[i]);
+	            
+	            if((numa + numb) == 0){
+	                if(!flag){
+	                    str3[k] = "0";
+	                }else{
+	                    flag = false;
+	                    str3[k] = "1";
+	                }
+	            }else if((numa + numb) == 1){
+	                if(!flag){
+	                    str3[k] = "1";
+	                }else{
+	                    flag = true;
+	                    str3[k] = "0";
+	                }
+	            }else if((numa + numb) == 2){
+	                if(!flag){
+	                    flag = true;
+	                    str3[k] = "0";
+	                }else{
+	                    str3[k] = "1";
+	                }
+	            }
+	            k--;
+	            i--;
+	        }
+          
+          //判断最后一位是否进位
+	        if(flag){
+	            str3[0] = "1";
+	        }else{
+	            str3[0] = "";
+	        }
+	        String str = String.join("",str3);
+	    
+	        return str;
+    }
