@@ -1,0 +1,24 @@
+class Solution {
+    public int maxProduct(String[] words) {
+        int len = words.length;
+        int[] nums = new int[len];
+        //用一个二进制数中的1代表字符串中字母的位置
+        //位计算实现
+        for(int i = 0; i < len; i++){
+            for(int j = 0; j < words[i].length(); j++){
+                nums[i] |= 1<<(words[i].charAt(j) - 'a');
+            }
+        }
+        //如果没有公共字母，两个字符串表示的二进制数进行与操作结果为0
+        //求出最大值
+        int res = 0;
+        for(int i = 0; i < len; i++){
+            for(int j = i+1; j< len; j++){
+                if((nums[i]&nums[j]) == 0){
+                    res = Math.max(res,words[i].length()*words[j].length());
+                }
+            }
+        }
+        return res;
+    }
+}
