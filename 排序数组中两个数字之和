@@ -1,0 +1,41 @@
+//1.直接暴力搜索，超出时间限制
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int[] numa = new int[2];
+        int len = numbers.length;
+        for(int i = 0; i < len; i++){
+            for(int j = i+1;j<len;j++){
+                if(numbers[j] == (target - numbers[i])){
+                    numa[0] = i;
+                    numa[1] = j;
+                    break;
+                }
+            }
+        }
+        return numa;
+    }
+}
+
+//2.设置头尾双指针，和大于target右指针左移，小于target，左指针右移
+class Solution {
+    public int[] twoSum(int[] numbers, int target) {
+        int[] numa = new int[2];
+        int len = numbers.length;
+        int i=0,j=len-1;
+        
+        while(i<j){
+            if((numbers[i]+numbers[j])>target){
+                j--;
+            }
+            else if((numbers[i]+numbers[j])<target){
+                i++;
+            }
+            else if((numbers[i]+numbers[j])==target){
+                numa[0] = i+1;
+                numa[1] = j+1;
+                break;
+            }
+        }
+        return numa;
+    }
+}
