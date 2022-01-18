@@ -1,0 +1,21 @@
+//给定一个正整数数组 nums和整数 k ，请找出该数组内乘积小于 k 的连续的子数组的个数。
+//滑动窗口方法练习
+class Solution {
+    public int numSubarrayProductLessThanK(int[] nums, int k) {
+        int sum = 1;
+        int left = 0, right = 0;
+        int count = 0;
+        while(right<nums.length){
+            sum *= nums[right];
+            
+            while(left<nums.length&&sum>=k){
+                sum/=nums[left++];
+            }
+            if(sum<k){
+                count += right-left+1;
+            }
+            right++;
+        }
+        return count;
+    }
+}
