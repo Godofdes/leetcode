@@ -1,0 +1,35 @@
+class Solution {
+    public String minWindow(String s, String t) {
+       int[] nums = new int[150];
+       if(s.length()<t.length()){
+           return "";
+       }
+
+       int left = 0, right = 0, sum = 0, l = 0;
+       int lens = s.length(), lent = t.length();
+
+       for(char c:t.toCharArray()){
+           if(++nums[c] == 1){
+                sum++;
+           }
+       }
+
+       for(int i = 0; i < lens; i++){
+           char c = s.charAt(i);
+           if(--nums[c] == 0){
+               sum--;
+           }
+           if(sum==0){
+                while(nums[s.charAt(l)]<0){
+                    ++nums[s.charAt(l++)];
+                }
+                if(right == left||(right - left) > i-l+1){
+                    right = i+1;
+                    left = l;
+                }
+           }
+       }
+       return s.substring(left, right);
+
+    }
+}
