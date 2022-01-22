@@ -1,0 +1,35 @@
+class Solution {
+    public boolean validPalindrome(String s) {
+        int len = s.length();
+        int right = len-1, left = 0;
+        
+        int halfnum = len/2-1;
+        boolean flag = true;
+        while(left<=halfnum&&right>halfnum){
+            if(s.charAt(left)!=s.charAt(right)){
+
+                
+                    flag = check(s, left, right-1)||check(s, left+1, right);
+                    break;
+            }
+            right--;
+            left++;
+        }
+        return flag;
+
+    }
+    public boolean check(String s, int l, int r){
+        
+        int halfnum = ((r-l)%2)==0?(r-l)/2-1+l:(r-l)/2+l;
+        boolean flag = true;
+        while(l<=halfnum&&r>=halfnum){
+            if(s.charAt(l)!=s.charAt(r)){
+                flag = false;
+            }
+            r--;
+            l++;
+        }
+
+        return flag;
+    }
+}
