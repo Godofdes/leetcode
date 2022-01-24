@@ -1,0 +1,59 @@
+/*
+ * @lc app=leetcode.cn id=143 lang=java
+ *
+ * [143] 重排链表
+ */
+
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public void reorderList(ListNode head) {
+        ListNode temp = head;
+        ListNode temp1 = head;
+        ListNode templist = new ListNode();
+        ListNode temp2 = templist;
+        ListNode p = null;
+        ListNode q = null;
+
+
+        int count = 1, halfnum = 0;
+        while(temp1.next!=null){
+            count++;
+            temp1 = temp1.next;
+        }
+        halfnum = count / 2 + 1;
+        ListNode temp3 = head;
+        while(--halfnum!=0){
+            temp3 = temp3.next;
+        }
+
+        while(temp3!=null){
+            p = temp3.next;
+            temp3.next = temp2.next;
+            temp2.next = temp3;
+            temp3 = p;
+        }
+        temp1 = head;
+        while(temp1.next!=null){
+            p = temp2.next;
+            q = temp1.next;
+            
+            temp1.next = temp2;
+            temp2.next = q;
+            temp1 = q;
+            temp2 = p;
+        }
+        if(temp1.next==null){
+            temp1.next = temp2;
+        }
+    }
+}
