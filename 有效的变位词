@@ -1,0 +1,15 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        int[] str1 = new int[26];
+        int[] str2 = new int[26];
+        int len1 = s.length();
+        int len2 = t.length();
+        for(int i = 0; i<len1; i++){
+            str1[s.charAt(i)-'a']++;
+        }
+        for(int i = 0; i<len2; i++){
+            str2[t.charAt(i)-'a']++;
+        }
+        return Arrays.equals(str1, str2)&&!s.equals(t);
+    }
+}
