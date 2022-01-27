@@ -1,0 +1,24 @@
+class Solution {
+    public int findMinDifference(List<String> timePoints) {
+        
+        int len = timePoints.size();
+        int[] nums = new int[len];
+        for(int i = 0;i<len;i++){
+            int minute = 0;
+            String s = timePoints.get(i);
+            minute = ((s.charAt(0)-'0')*10+(s.charAt(1)-'0'))*60+((s.charAt(3)-'0')*10+(s.charAt(4)-'0'));
+            nums[i] = minute;
+           
+        }
+        Arrays.sort(nums);
+        int min = nums[1]-nums[0];
+        for(int i=0;i<len-1;i++){
+            min = Math.min(min,nums[i+1]-nums[i]);
+        }
+
+        min = Math.min(min, 24*60-nums[len-1]+nums[0]);
+        
+        return min;
+
+    }
+}
