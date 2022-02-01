@@ -1,0 +1,22 @@
+class Solution {
+    public int largestRectangleArea(int[] heights) {
+        int len = heights.length;
+        int left = 0, right = len-1;
+        int maxsum = 0;
+
+        for(int i = 0; i<len;i++){
+            left = i-1;
+            right = i+1;
+            if(len*heights[i]>maxsum){
+                while(left>=0&&heights[left]>=heights[i]){
+                    left--;
+                }
+                while(right<len&&heights[right]>=heights[i]){
+                    right++;
+                }
+                maxsum = Math.max(maxsum, heights[i]*(right-left-1));
+            }
+        }
+        return maxsum;
+    }
+}
