@@ -1,0 +1,19 @@
+class Solution {
+    boolean res;
+    Set<Integer> map = new HashSet();
+    public boolean findTarget(TreeNode root, int k) {
+        dfs(root, k);
+        return res;
+    }
+    public void dfs(TreeNode root , int n){
+        if(root==null||res){
+            return;
+        }
+        dfs(root.left, n);
+        if(map.contains(n-root.val)){
+            res =  true;
+        }
+        map.add(root.val);
+        dfs(root.right, n);
+    }
+}
