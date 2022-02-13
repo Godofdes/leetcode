@@ -1,0 +1,83 @@
+import java.util.Arrays;
+
+/*
+ * @lc app=leetcode.cn id=676 lang=java
+ *
+ * [676] 实现一个魔法字典
+ */
+
+// @lc code=start
+class MagicDictionary {
+
+    private class Trie{
+        private boolean isEnd;
+        private Trie[] next;
+        public Trie(){
+            next = new Trie[26];
+            isEnd = false;
+        }
+    }
+    private Trie root;
+
+    public MagicDictionary() {
+        root = new Trie();
+    }
+    
+    public void buildDict(String[] dictionary) {
+        Trie p = root;
+        for(String str : dictionary){
+            p = root;
+            char[] ch = str.toCharArray();
+            for(char c : ch){
+                if(p.next[c-'a'] == null){
+                    p.next[c-'a'] = new Trie();
+                }
+                p = p.next[c-'a'];
+            }
+            p.isEnd = true;
+        }
+    }
+    
+    public boolean search(String searchWord) {
+        Trie p = root;
+        char[] ch = searchWord.toCharArray();
+        for(int i = 0; i < ch.length; i++){
+            if(p.next[ch[i]-'a']==null){
+                dfs(p, searchWord, i);
+                break;
+            }
+            p = p.next[ch[i]-'a'];
+        }
+        return false;
+    }
+     public boolean dfs(Trie tr, String s, int locate){
+        Trie p = tr;
+        char[] ch = s.toCharArray();
+        for(int i = 0; i < 26; i++){
+            p = tr; 
+            if(p.next[i]!=null){
+                 p = p.next[i];
+                 for(int j = locate; j<ch.length;j++){
+                    if(p.next[ch[j]-'a']==null){
+                        j=ch.length-1;
+                    }
+                    if(p.isEnd==true){
+                        return true;
+                    }
+                    p = p.next[ch[j]-'a'];
+                    
+                 }
+             }
+         }
+         return false;
+     }
+}
+
+/**
+ * Your MagicDictionary object will be instantiated and called as such:
+ * MagicDictionary obj = new MagicDictionary();
+ * obj.buildDict(dictionary);
+ * boolean param_2 = obj.search(searchWord);
+ */
+// @lc code=end
+
