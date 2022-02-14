@@ -1,0 +1,19 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int len = nums.length;
+        int i = 0;
+        int left = 0, right = len - 1;
+
+        while(left<right){
+            i = left+(right-left)/2;
+            if(nums[i] == nums[i^1]){
+                left = i +1;
+            }
+            else{
+                right = i;
+            }
+        }
+        
+        return nums[left];
+    }
+}
