@@ -1,0 +1,34 @@
+class Solution {
+
+    int[] sum;
+    int size = 0;
+    public Solution(int[] w) {
+
+        int len = w.length;
+        sum = w.clone();
+        for(int i = 1; i<len; i++){
+            sum[i] = sum[i-1] + w[i];
+        }
+        size = Arrays.stream(w).sum();
+    }
+    
+    public int pickIndex() {
+        
+        int r = (int)(Math.random()*size)+1;
+        return bSearch(r);
+    }
+
+    public int bSearch(int x){
+        int left = 0, right = sum.length-1;
+        while(left<right){
+            int mid = left + (right - left)/2;
+            if(sum[mid] < x){
+                left = mid+1;
+            }
+            else{
+                right = mid;
+            }
+        }
+        return left;
+    }
+}
