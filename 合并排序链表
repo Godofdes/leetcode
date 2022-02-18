@@ -1,0 +1,60 @@
+import java.util.List;
+
+/*
+ * @lc app=leetcode.cn id=23 lang=java
+ *
+ * [23] 合并K个升序链表
+ */
+
+// @lc code=start
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public ListNode mergeKLists(ListNode[] lists) {
+        int len = lists.length;
+        while(len>1){
+            boolean flag = false;
+            if(len%2!=0){
+                flag = true;
+            }
+            len = len/2;
+            int i = 0,k = 0;
+            for(i = 0,k = 0;i<len;i++,k+=2){
+                lists[i] = mergeSort(lists[k], lists[k+1]);
+            }
+            if(flag == true){
+                lists[i+1] = mergeSort(lists[k-1], null);
+                len++;
+            }
+        }
+        return lists[0];
+    }
+    public ListNode mergeSort(ListNode l1, ListNode l2){
+        ListNode res = new ListNode();
+        ListNode cur = res;
+        while(l1!=null&&l2!=null){
+            if(l1.val<=l2.val){
+                cur.next = l1;
+                cur = cur.next;
+                l1 = l1.next;
+            }
+            else{
+                cur.next = l2;
+                cur = cur.next;
+                l2 = l2.next;
+            }
+        }
+        cur.next = l1==null? l2:l1;
+        return res.next;
+    }
+}
+// @lc code=end
+
