@@ -1,0 +1,33 @@
+class Solution {
+    public List<List<Integer>> ls = new ArrayList<>();
+    public List<List<Integer>> permute(int[] nums) {
+        int[] hash = new int[22];
+        for(int i = 0; i<nums.length; i++){
+            hash[nums[i]+10] = 1;
+        }
+        List<Integer> res = new ArrayList<>();
+        dfs(hash,nums,res,nums.length);
+        return ls;
+
+    }
+    public void dfs(int[] hash, int[] nums, List<Integer>res, int count){
+        int[] h = hash.clone();
+        List<Integer> li = new ArrayList<>(res);
+        if(count<0){
+            return;
+        }
+        if(count == 0){
+            ls.add(li);
+            return;
+        }
+        for(int i = 0; i<nums.length;i++){
+            if(h[nums[i]+10]==1){
+                h[nums[i]+10] = 0;
+                li.add(nums[i]);
+                dfs(h, nums, li, count-1);
+                h[nums[i]+10] = 1;
+                li.remove(li.size()-1);
+            }
+        }
+    }
+}
