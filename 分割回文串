@@ -1,0 +1,35 @@
+class Solution {
+    List<List<String>> ls = new ArrayList<>();
+    public List<List<String>> partition(String s) {
+        List<String> li = new ArrayList<>();
+        dfs(li, s, 0);
+        return ls;
+    }
+    public void dfs(List<String> li, String s, int index){
+        if(index>=s.length()){
+            List<String> l = new ArrayList<>(li);
+            ls.add(l);
+            return;
+        }
+        for(int i = index; i<s.length();i++){
+            if(isPalindrome(s,index,i)){
+                li.add(s.substring(index, i+1));
+                dfs(li, s, i+1);
+                li.remove(li.size()-1);
+            }
+        }
+    }
+
+    public boolean isPalindrome(String s,int index, int i) {        
+        boolean flag = true;
+        int left = index, right = i;
+        while(right>left){
+            if(s.charAt(left)!=s.charAt(right)){
+                return false;
+            }
+            right--;
+            left++;
+        }
+        return flag;
+    }
+}
